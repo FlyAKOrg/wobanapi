@@ -29,7 +29,7 @@ app.use(cors());
 app.use(json());
 
 log.info('Adding v1 routes');
-app.use(v1Router);
+app.use('/v1', v1Router);
 
 log.info('Defining error handlers');
 app.use((req, res, next) => next(new HttpError(404, 'Not Found')));
