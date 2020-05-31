@@ -4,9 +4,10 @@ export default class HttpError extends Error {
   constructor(_code, _message) {
     if (typeof _message === 'string') {
       super(_message);
+      this.code = _code || 500;
     } else if ('message' in _message) {
-      super(_message);
-      this.code = _code;
+      super(_message.message);
+      this.code = _code || 500;
     } else {
       super('Internal Server Error');
       this.code = 500;
