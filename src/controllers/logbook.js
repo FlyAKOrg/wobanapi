@@ -74,7 +74,7 @@ const logbookController = {
         );
       })
       .catch((err) => {
-        log.warn("Error fetching bookings, error: " + JSON.stringify(err2));
+        log.warn("Error fetching bookings, error: " + JSON.stringify(err));
         return next(
           new HttpError(
             HttpStatusCode.INTERNAL_SERVER_ERROR,
