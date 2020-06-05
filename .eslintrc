@@ -1,6 +1,10 @@
 {
-  "extends": "airbnb",
+  "extends": "prettier",
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2019
   }
 }

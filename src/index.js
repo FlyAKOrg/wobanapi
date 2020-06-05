@@ -1,12 +1,14 @@
-import express from 'express';
-import cors from 'cors';
-import { json } from 'body-parser';
-import log from './utils/log';
-import db from './db';
-import v1Router from './routes/v1';
-import HttpError from './exceptions/HttpError';
+require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const log = require('./utils/log');
+const db = require('./db');
+const HttpError = require('./exceptions/HttpError');
+const basicAuth = require('express-basic-auth')
+const basicAuthAuthorizer = require('./security/basicAuth');
 
-require('dotenv').config();
+const publicv1Router = require('./routes/v1/public');
+const v1Router = require('./routes/v1');
 
 const dbPrep = (app, opts) => {
   db.buildConnection(opts).then(() => {
@@ -20,16 +22,27 @@ const dbPrep = (app, opts) => {
   });
 };
 
-log.info('Starting NZVirtual API Core');
+log.info('Starting NZVirtual Wodan API Core');
 
 const app = express();
 
 log.info('Adding middleware');
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
-log.info('Adding v1 routes');
-app.use('/v1', v1Router);
+log.info('Adding public v1 routes');
+app.use('/v1', publicv1Router);
+
+log.info('Adding private v1 routes');
+app.use(
+  "/v1",
+  basicAuth({
+    authorizer: basicAuthAuthorizer,
+    authorizeAsync: true,
+    challenge: false,
+  }),
+  v1Router
+);
 
 log.info('Defining error handlers');
 app.use((req, res, next) => next(new HttpError(404, 'Not Found')));
@@ -44,12 +57,15 @@ app.use((error, req, res, next) => {
 });
 
 log.info('Web Server configured, starting database connection...');
+
 const opts = {
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 3306,
   database: process.env.DB_DATABASE || 'nzvirtual',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'secret12345', 
+  password: process.env.DB_PASSWORD || 'secret12345',
 };
+
+if (process.env.DB_DEBUG_LOGGING) opts['logging'] = (str) => log.debug(str);
 
 dbPrep(app, opts);

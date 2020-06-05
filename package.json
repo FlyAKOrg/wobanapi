@@ -1,10 +1,11 @@
 {
-  "name": "api",
+  "name": "wodan",
   "version": "1.0.0",
-  "description": "NZVirtual API",
+  "description": "NZVirtual Flight Tracker API service",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "Daniel A. Hawton <daniel@nzvirtual.org>",
@@ -15,13 +16,16 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.11"
   },
   "devDependencies": {
     "eslint": "6.8.0",
-    "eslint-config-airbnb": "18.1.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
   }
 }

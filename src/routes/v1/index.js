@@ -1,11 +1,11 @@
-import {Router} from 'express';
+const { Router } = require('express');
 
 const router = Router();
-router.get('/ping', (req, res) => {
+router.get('/logbook', (req, res) => {
   res.status(200).json({
     status: 'OK',
     message: 'PONG',
   });
 });
 
-export default router;
+module.exports = router;
