@@ -11,13 +11,13 @@ const checkDb = async (username, password, cb) => {
   })
     .then((user) => {
       if (bcryptjs.compareSync(password, user.password)) {
-        return cb(true);
+        return cb(true, user);
       }
 
-      return cb(false);
+      return cb(false, null);
     })
     .catch((e) => {
-      return cb(false);
+      return cb(false, null);
     });
 };
 
@@ -25,8 +25,10 @@ const middleware = (req, res, next) => {
   const auth = basicAuth(req);
 
   if (auth) {
-    return checkDb(auth.name, auth.pass, (approved) => {
+    return checkDb(auth.name, auth.pass, (approved, user) => {
       if (!approved) return new HttpError(401, "Unauthorized");
+
+      req.auth = user;
 
       return next();
     });

@@ -14,6 +14,9 @@ const logbookController = {
         if (logbook === null)
           return next(new HttpError(HttpStatusCode.NOT_FOUND, "Not Found"));
 
+        if (logbook.user_id !== req.auth.id)
+          return next(new HttpError(HttpStatusCode.FORBIDDEN, "Forbidden"));
+
         return res.status(HttpStatusCode.OK).json(logbook);
       })
       .catch((err) => {
@@ -38,6 +41,9 @@ const logbookController = {
         if (booking === null) {
           return next(new HttpError(HttpStatusCode.NOT_FOUND, "Not Found"));
         }
+
+        if (booking.user_id !== req.auth.id)
+          return next(new HttpError(HttpStatusCode.FORBIDDEN, "Forbidden"));
 
         return db.Logbook.create({
           user_id: booking.user_id,
