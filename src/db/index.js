@@ -1,17 +1,18 @@
-const Sequelize = require('sequelize');
-const users = require('./models/User');
-const fs = require('fs');
-const path = require('path');
+const Sequelize = require("sequelize");
+const users = require("./models/User");
+const fs = require("fs");
+const path = require("path");
 const basename = path.basename(__filename);
 
-const db = {}
+const db = {};
 
 db.buildConnection = (opts) => {
   db.Sequelize = Sequelize;
   let sequelize = new Sequelize(opts.database, opts.user, opts.password, {
     host: opts.host,
     port: opts.port,
-    dialect: 'mysql',
+    dialect: "mysql",
+    timezone: "+00:00",
     logging: opts.logging || false,
     pool: {
       min: 0,
@@ -28,7 +29,9 @@ db.buildConnection = (opts) => {
       );
     })
     .forEach((file) => {
-      const model = sequelize["import"](path.join(__dirname + "/models/", file));
+      const model = sequelize["import"](
+        path.join(__dirname + "/models/", file)
+      );
       db[model.name] = model;
     });
 

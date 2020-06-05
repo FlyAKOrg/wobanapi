@@ -1,11 +1,7 @@
-const { Router } = require('express');
+const { Router } = require("express");
+const logbookRouter = require("./logbook");
 
 const router = Router();
-router.get('/logbook', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'PONG',
-  });
-});
+router.use("/logbook", logbookRouter);
 
 module.exports = router;

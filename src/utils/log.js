@@ -7,6 +7,9 @@ const log = {
   info(msg) {
     this.print(`- INFO  - ${msg}`);
   },
+  warn(msg) {
+    this.print(`- WARN  - ${msg}`);
+  },
   debug(msg) {
     this.print(`- DEBUG - ${msg}`);
   },

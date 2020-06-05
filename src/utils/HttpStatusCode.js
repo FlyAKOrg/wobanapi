@@ -1,6 +1,6 @@
 /**
  * Credit: https://gist.github.com/scokmen/f813c904ef79022e84ab2409574d1b45
- * 
+ *
  * Hypertext Transfer Protocol (HTTP) response status codes.
  * @see {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes}
  */
@@ -155,7 +155,7 @@ const HttpStatusCode = Object.freeze({
    * The server cannot or will not process the request due to an apparent client error
    * (e.g., malformed request syntax, too large size, invalid request message framing, or deceptive request routing).
    */
-  BAD_REQUEST: 400,
+  MALFORMED_REQUEST: 400,
 
   /**
    * Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet
@@ -376,7 +376,7 @@ const HttpStatusCode = Object.freeze({
    * Intended for use by intercepting proxies used to control access to the network (e.g., "captive portals" used
    * to require agreement to Terms of Service before granting full Internet access via a Wi-Fi hotspot).
    */
-  NETWORK_AUTHENTICATION_REQUIRED: 511
+  NETWORK_AUTHENTICATION_REQUIRED: 511,
 });
 
 module.exports = HttpStatusCode;
