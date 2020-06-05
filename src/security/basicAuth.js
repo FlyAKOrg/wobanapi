@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs");
 const basicAuth = require("basic-auth");
 const HttpError = require("../exceptions/HttpError");
 
-const checkDb = async (username, password, cb) => {
+const checkDb = (username, password, cb) => {
   db.User.findOne({
     where: {
       email: username,
