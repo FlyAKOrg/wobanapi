@@ -42,4 +42,4 @@ db.buildConnection = (opts) => {
   return db.sequelize.authenticate();
 };
 
-module.exports = db;
+export default db;
