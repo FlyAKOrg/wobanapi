@@ -1,7 +1,9 @@
-const { Router } = require("express");
-const HttpStatusCode = require("../../utils/HttpStatusCode");
-const HttpError = require("../../exceptions/HttpError");
-const logbookController = require("../../controllers/logbook");
+import { Router } from "express";
+import HttpStatusCode from "../../utils/HttpStatusCode";
+import HttpError from "../../exceptions/HttpError";
+
+import getLogbook from "../../handlers/logbook/getLogbook";
+import startLogbook from "../../handlers/logbook/startLogbook";
 
 const router = Router();
 router.post(
@@ -16,8 +18,8 @@ router.post(
 
     return next();
   },
-  logbookController.startLogbook
+  startLogbook
 );
-router.get("/:logbookId", logbookController.getLogbook);
+router.get("/:logbookId", getLogbook);
 
 module.exports = router;
