@@ -1,6 +1,6 @@
-const log = require("../utils/log");
+import log from "../utils/log";
 
-module.exports = class HttpError extends Error {
+export default class HttpError extends Error {
   constructor(constCode, constMessage) {
     if (typeof constMessage === "string") {
       super(constMessage);
@@ -18,4 +18,4 @@ module.exports = class HttpError extends Error {
       );
     }
   }
-};
+}
