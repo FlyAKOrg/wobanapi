@@ -2,7 +2,6 @@ const { Router } = require("express");
 const HttpStatusCode = require("../../utils/HttpStatusCode");
 const HttpError = require("../../exceptions/HttpError");
 const logbookController = require("../../controllers/logbook");
-const log = require("../../utils/log");
 
 const router = Router();
 router.post(

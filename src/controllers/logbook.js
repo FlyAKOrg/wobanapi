@@ -5,7 +5,7 @@ const HttpStatusCode = require("../utils/HttpStatusCode");
 
 const logbookController = {
   getLogbook: (req, res, next) => {
-    const logbookId = req.params.logbookId;
+    const { logbookId } = req.params;
 
     return db.Logbook.findOne({
       where: { id: logbookId },
@@ -30,7 +30,7 @@ const logbookController = {
       });
   },
   startLogbook: (req, res, next) => {
-    const bookingId = req.body.bookingId;
+    const { bookingId } = req.body;
 
     return db.Booking.findOne({
       where: {
@@ -63,15 +63,15 @@ const logbookController = {
           fuel_end: 0.0,
           distance_flown: 0.0,
           positions: [],
-        }).then((logbook) => {
-          return res.status(HttpStatusCode.CREATED).json({
+        }).then((logbook) =>
+          res.status(HttpStatusCode.CREATED).json({
             logbook,
             booking,
-          });
-        });
+          })
+        );
       })
       .catch((err) => {
-        log.warn("Error creating logbook entry, error: " + JSON.stringify(err));
+        log.warn(`Error creating logbook entry, error: ${JSON.stringify(err)}`);
         return next(
           new HttpError(
             HttpStatusCode.INTERNAL_SERVER_ERROR,
@@ -80,7 +80,7 @@ const logbookController = {
         );
       })
       .catch((err) => {
-        log.warn("Error fetching bookings, error: " + JSON.stringify(err));
+        log.warn(`Error fetching bookings, error: ${JSON.stringify(err)}`);
         return next(
           new HttpError(
             HttpStatusCode.INTERNAL_SERVER_ERROR,

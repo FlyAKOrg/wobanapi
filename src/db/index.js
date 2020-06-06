@@ -1,13 +1,13 @@
 const Sequelize = require("sequelize");
-const users = require("./models/User");
 const fs = require("fs");
 const path = require("path");
+
 const basename = path.basename(__filename);
 
 const db = {};
 
 db.buildConnection = (opts) => {
-  let sequelize = new Sequelize(opts.database, opts.user, opts.password, {
+  const sequelize = new Sequelize(opts.database, opts.user, opts.password, {
     host: opts.host,
     port: opts.port,
     dialect: "mysql",
@@ -21,16 +21,13 @@ db.buildConnection = (opts) => {
     },
   });
 
-  fs.readdirSync(__dirname + "/models/")
-    .filter((file) => {
-      return (
+  fs.readdirSync(`${__dirname}/models/`)
+    .filter(
+      (file) =>
         file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-      );
-    })
+    )
     .forEach((file) => {
-      const model = sequelize["import"](
-        path.join(__dirname + "/models/", file)
-      );
+      const model = sequelize.import(path.join(`${__dirname}/models/`, file));
       db[model.name] = model;
     });
 

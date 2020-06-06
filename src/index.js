@@ -64,6 +64,6 @@ const opts = {
   password: process.env.DB_PASSWORD || "secret12345",
 };
 
-if (process.env.DB_DEBUG_LOGGING) opts["logging"] = (str) => log.debug(str);
+if (process.env.DB_DEBUG_LOGGING) opts.logging = (str) => log.debug(str);
 
 dbPrep(app, opts);

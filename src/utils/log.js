@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const log = {
-  print(msg) {
-    msg = `[${new Date().toISOString()}] ${msg}`;
+  print(baseMsg) {
+    const msg = `[${new Date().toISOString()}] ${baseMsg}`;
     console.log(msg);
   },
   info(msg) {

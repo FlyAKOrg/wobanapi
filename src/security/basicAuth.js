@@ -1,6 +1,6 @@
-const db = require("../db");
 const bcryptjs = require("bcryptjs");
 const basicAuth = require("basic-auth");
+const db = require("../db");
 const HttpError = require("../exceptions/HttpError");
 
 const checkDb = (username, password, cb) => {
@@ -16,9 +16,7 @@ const checkDb = (username, password, cb) => {
 
       return cb(false, null);
     })
-    .catch((e) => {
-      return cb(false, null);
-    });
+    .catch(() => cb(false, null));
 };
 
 const middleware = (req, res, next) => {
@@ -32,9 +30,8 @@ const middleware = (req, res, next) => {
 
       return next();
     });
-  } else {
-    return new HttpError(401, "Unauthorized");
   }
+  return new HttpError(401, "Unauthorized");
 };
 
 module.exports = {
