@@ -7,7 +7,6 @@ const basename = path.basename(__filename);
 const db = {};
 
 db.buildConnection = (opts) => {
-  db.Sequelize = Sequelize;
   let sequelize = new Sequelize(opts.database, opts.user, opts.password, {
     host: opts.host,
     port: opts.port,
