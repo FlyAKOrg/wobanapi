@@ -1,7 +1,7 @@
-import db from '../../db';
-import log from '../../utils/log';
-import HttpError from '../../exceptions/HttpError';
-import HttpStatusCode from '../../utils/HttpStatusCode';
+import db from "../../db";
+import log from "../../utils/log";
+import HttpError from "../../exceptions/HttpError";
+import HttpStatusCode from "../../utils/HttpStatusCode";
 
 export default async (req, res, next) => {
   const { logbookId } = req.params;
@@ -10,7 +10,7 @@ export default async (req, res, next) => {
 
   try {
     logbook = await db.Logbook.findOne({
-      where: { id: logbookId }
+      where: { id: logbookId },
     });
   } catch (err) {
     log.error(`Error fetching logbook ${logbookId}, error ${err.message}`);
@@ -26,5 +26,5 @@ export default async (req, res, next) => {
     return next(new HttpError(HttpStatusCode.NOT_FOUND, "Not Found"));
   }
 
-  res.status(HttpStatusCode.OK).json(logbook);
-}
+  return res.status(HttpStatusCode.OK).json(logbook);
+};

@@ -13,7 +13,7 @@
     "prod": "node dist/index.js"
   },
   "husky": {
-    "pre-commit": "yarn lint"
+    "pre-commit": "yarn format && yarn lint"
   },
   "keywords": [],
   "author": "Daniel A. Hawton <daniel@nzvirtual.org> and Rahul A. Parkar <rahul@nzvirtual.org>",

@@ -1,31 +1,30 @@
+import * as dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import log from "./utils/log";
+import db from "./db";
+import HttpError from "./exceptions/HttpError";
+import authMiddleware from "./security/basicAuth";
+import publicv1Router from "./routes/v1/public";
+import v1Router from "./routes/v1";
+
+dotenv.config();
 process.env.TZ = "UTC";
 
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const log = require("./utils/log");
-const db = require("./db");
-const HttpError = require("./exceptions/HttpError");
+const dbPrep = async (app, opts) => {
+  try {
+    await db.buildConnection(opts);
+  } catch (e) {
+    log.error(
+      `Error establishing connection to database ${e}... waiting to try again.`
+    );
+    setTimeout(() => dbPrep(app, opts), 10000);
+  }
 
-const authMiddleware = require("./security/basicAuth");
-
-const publicv1Router = require("./routes/v1/public");
-const v1Router = require("./routes/v1");
-
-const dbPrep = (app, opts) => {
-  db.buildConnection(opts)
-    .then(() => {
-      log.info("Database connection established.");
-      app.listen(process.env.port || 8080, () => {
-        log.info(`Listening on ${process.env.port || 8080}`);
-      });
-    })
-    .catch((e) => {
-      log.error(
-        `Error establishing connection to database ${e}... waiting to try again.`
-      );
-      setTimeout(() => dbPrep(app, opts), 10000);
-    });
+  log.info("Database connection established.");
+  app.listen(process.env.port || 8080, () => {
+    log.info(`Listening on ${process.env.port || 8080}`);
+  });
 };
 
 log.info("Starting NZVirtual Wodan API Core");
