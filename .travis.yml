@@ -14,7 +14,7 @@ test:
 script:
   - yarn
   - yarn build
-  - if [[ "$TRAVIS_TAG" != "" ] || [[ "$TRAVIS_BRANCH" == "dev" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]]]; then
+  - if [[ "$TRAVIS_TAG" != "" ]] || [[ "$TRAVIS_BRANCH" == "dev" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
     docker build -t flyakorg/wobanapi:latest
     fi
 
