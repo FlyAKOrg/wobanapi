@@ -15,21 +15,21 @@ script:
   - yarn
   - yarn build
   - if [[ "$TRAVIS_TAG" != "" ]] || [[ "$TRAVIS_BRANCH" == "dev" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-    docker build -t flyakorg/wobanapi:latest
+    docker build -t flyakorg/wobanapi .;
     fi
 
 after_script:
   - if [ "$TRAVIS_TAG" != "" ];
-    then docker tag flyakorg/api flyakorg/api:latest;
+    then docker tag flyakorg/wobanapi flyakorg/wobanapi:latest;
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push flyakorg/api:latest;
-    docker tag flyakorg/api:latest flyakorg/api:$TRAVIS_TAG;
-    docker push flyakorg/api:$TRAVIS_TAG;
+    docker push flyakorg/wobanapi:latest;
+    docker tag flyakorg/wobanapi:latest flyakorg/wobanapi:$TRAVIS_TAG;
+    docker push flyakorg/wobanapi:$TRAVIS_TAG;
     fi
   - if [ "$TRAVIS_BRANCH" == "dev" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    docker tag flyakorg/api flyakorg/api:devel;
+    docker tag flyakorg/wobanapi flyakorg/wobanapi:devel;
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push flyakorg/api:devel;
+    docker push flyakorg/wobanapi:devel;
     fi
 
 after_success:
