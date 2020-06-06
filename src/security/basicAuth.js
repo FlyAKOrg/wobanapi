@@ -1,7 +1,7 @@
-const bcryptjs = require("bcryptjs");
-const basicAuth = require("basic-auth");
-const db = require("../db");
-const HttpError = require("../exceptions/HttpError");
+import bcryptjs from "bcryptjs";
+import basicAuth from "basic-auth";
+import db from "../db";
+import HttpError from "../exceptions/HttpError";
 
 const checkDb = (username, password, cb) => {
   db.User.findOne({
@@ -34,6 +34,4 @@ const middleware = (req, res, next) => {
   return new HttpError(401, "Unauthorized");
 };
 
-module.exports = {
-  middleware,
-};
+export default middleware;

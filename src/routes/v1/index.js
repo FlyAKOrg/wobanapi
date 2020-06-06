@@ -1,7 +1,7 @@
-const { Router } = require("express");
-const logbookRouter = require("./logbook");
+import { Router } from "express";
+import logbookRouter from "./logbook";
 
 const router = Router();
 router.use("/logbook", logbookRouter);
 
-module.exports = router;
+export default router;

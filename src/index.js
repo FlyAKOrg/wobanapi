@@ -39,7 +39,7 @@ log.info("Adding public v1 routes");
 app.use("/v1", publicv1Router);
 
 log.info("Adding private v1 routes");
-app.use("/v1", authMiddleware.middleware, v1Router);
+app.use("/v1", authMiddleware, v1Router);
 
 log.info("Defining error handlers");
 app.use((req, res, next) => next(new HttpError(404, "Not Found")));

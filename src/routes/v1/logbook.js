@@ -24,4 +24,4 @@ router.post(
 router.get("/:logbookId", getLogbook);
 router.patch("/:logbookId", patchLogbook);
 
-module.exports = router;
+export default router;

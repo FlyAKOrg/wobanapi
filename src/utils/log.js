@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const log = {
+export default {
   print(baseMsg) {
     const msg = `[${new Date().toISOString()}] ${baseMsg}`;
     console.log(msg);
@@ -17,5 +17,3 @@ const log = {
     this.print(`- ERROR - ${msg}`);
   },
 };
-
-module.exports = log;
