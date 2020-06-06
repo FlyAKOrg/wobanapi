@@ -4,8 +4,7 @@
   "description": "NZVirtual Flight Tracker API service",
   "main": "src/index.js",
   "scripts": {
-    "test": "yarn format && yarn lint",
-    "format": "prettier-eslint —eslint-config-path $PWD/.eslintrc --write '$PWD/**/*.js' && eslint --fix .",
+    "test": "yarn lint",
     "babel": "babel-node --presets @babel/preset-env",
     "lint": "eslint src --ext .js",
     "dev": "nodemon --exec yarn babel -- src/index.js",
@@ -13,7 +12,7 @@
     "prod": "node dist/index.js"
   },
   "husky": {
-    "pre-commit": "yarn format && yarn lint"
+    "pre-commit": "yarn lint"
   },
   "keywords": [],
   "author": "Daniel A. Hawton <daniel@nzvirtual.org> and Rahul A. Parkar <rahul@nzvirtual.org>",
@@ -42,8 +41,6 @@
     "eslint-plugin-prettier": "^3.1.3",
     "husky": "^4.2.5",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5",
-    "prettier-eslint": "^10.1.1",
-    "prettier-eslint-cli": "^5.0.0"
+    "prettier": "^2.0.5"
   }
 }
