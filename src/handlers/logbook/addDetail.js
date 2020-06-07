@@ -9,6 +9,7 @@ export default async (req, res, next) => {
   let logbook;
   try {
     logbook = await db.Logbook.findOne({
+      attributes: ["id", "user_id"],
       where: { id: logbookId },
     });
   } catch (err) {

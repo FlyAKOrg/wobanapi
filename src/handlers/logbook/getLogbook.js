@@ -11,6 +11,10 @@ export default async (req, res, next) => {
   try {
     logbook = await db.Logbook.findOne({
       where: { id: logbookId },
+      include: {
+        model: db.LogbookDetail,
+        as: "details",
+      }
     });
   } catch (err) {
     log.error(`Error fetching logbook ${logbookId}, error ${err.message}`);
@@ -26,7 +30,7 @@ export default async (req, res, next) => {
     return next(new HttpError(HttpStatusCode.NOT_FOUND, "Not Found"));
   }
 
-  let logbookDetails;
+  /* let logbookDetails;
   try {
     logbookDetails = await db.LogbookDetails.findAll({
       where: { logbook_id: logbook.id },
@@ -43,7 +47,7 @@ export default async (req, res, next) => {
       )
     );
   }
-  logbook.details = logbookDetails;
+  logbook.details = logbookDetails; */
 
   return res.status(HttpStatusCode.OK).json(logbook);
 };

@@ -39,6 +39,12 @@ db.buildConnection = (opts) => {
 
   db.sequelize = sequelize;
 
+  db.Logbook.hasMany(db.LogbookDetail, {
+    foreignKey: "logbook_id",
+    sourceKey: "id",
+    as: "details",
+  });
+
   return db.sequelize.authenticate();
 };
 

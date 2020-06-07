@@ -22,8 +22,8 @@ const dbPrep = async (app, opts) => {
   }
 
   log.info("Database connection established.");
-  app.listen(process.env.port || 8080, () => {
-    log.info(`Listening on ${process.env.port || 8080}`);
+  app.listen(process.env.port || 8081, () => {
+    log.info(`Listening on ${process.env.port || 8081}`);
   });
 };
 
