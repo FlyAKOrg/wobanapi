@@ -7,13 +7,12 @@ export default async (req, res, next) => {
   const { logbookId } = req.params;
 
   let logbook;
-
   try {
     logbook = await db.Logbook.findOne({
       where: { id: logbookId },
     });
   } catch (err) {
-    log.error(`Error fetching logbook ${logbookId}, error ${err.message}`);
+    log.error(`Error finding logbook ${logbookId}, ${err.message}`);
     return next(
       new HttpError(
         HttpStatusCode.INTERNAL_SERVER_ERROR,
@@ -26,16 +25,20 @@ export default async (req, res, next) => {
     return next(new HttpError(HttpStatusCode.NOT_FOUND, "Not Found"));
   }
 
-  let logbookDetails;
+  if (logbook.user_id !== req.auth.id) {
+    return next(new HttpError(HttpStatusCode.FORBIDDEN, "Forbidden"));
+  }
+
+  let entry;
+
   try {
-    logbookDetails = await db.LogbookDetails.findAll({
-      where: { logbook_id: logbook.id },
-      order: [["created_at", "DESC"]],
+    entry = await db.LogbookDetail.create({
+      ...req.body,
+      logbook_id: logbook.id,
+      created_at: new Date(),
     });
   } catch (err) {
-    log.error(
-      `Error fetching logbook details ${logbookId}, error ${err.message}`
-    );
+    log.error(`Error creating logbook detail entry, ${err.message}`);
     return next(
       new HttpError(
         HttpStatusCode.INTERNAL_SERVER_ERROR,
@@ -43,7 +46,6 @@ export default async (req, res, next) => {
       )
     );
   }
-  logbook.details = logbookDetails;
 
-  return res.status(HttpStatusCode.OK).json(logbook);
+  return res.status(HttpStatusCode.CREATED).send(entry);
 };
