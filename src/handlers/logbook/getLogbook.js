@@ -14,7 +14,7 @@ export default async (req, res, next) => {
       include: {
         model: db.LogbookDetail,
         as: "details",
-      }
+      },
     });
   } catch (err) {
     log.error(`Error fetching logbook ${logbookId}, error ${err.message}`);
@@ -29,25 +29,6 @@ export default async (req, res, next) => {
   if (logbook === null) {
     return next(new HttpError(HttpStatusCode.NOT_FOUND, "Not Found"));
   }
-
-  /* let logbookDetails;
-  try {
-    logbookDetails = await db.LogbookDetails.findAll({
-      where: { logbook_id: logbook.id },
-      order: [["created_at", "DESC"]],
-    });
-  } catch (err) {
-    log.error(
-      `Error fetching logbook details ${logbookId}, error ${err.message}`
-    );
-    return next(
-      new HttpError(
-        HttpStatusCode.INTERNAL_SERVER_ERROR,
-        "Internal Server Error"
-      )
-    );
-  }
-  logbook.details = logbookDetails; */
 
   return res.status(HttpStatusCode.OK).json(logbook);
 };
