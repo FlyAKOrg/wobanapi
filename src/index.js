@@ -19,6 +19,7 @@ const dbPrep = async (app, opts) => {
       `Error establishing connection to database ${e}... waiting to try again.`
     );
     setTimeout(() => dbPrep(app, opts), 10000);
+    return;
   }
 
   log.info("Database connection established.");
