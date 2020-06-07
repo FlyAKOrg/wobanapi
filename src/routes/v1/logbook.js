@@ -5,6 +5,7 @@ import HttpError from "../../exceptions/HttpError";
 import getLogbook from "../../handlers/logbook/getLogbook";
 import startLogbook from "../../handlers/logbook/startLogbook";
 import patchLogbook from "../../handlers/logbook/patchLogbook";
+import addDetail from "../../handlers/logbook/addDetail";
 
 const router = Router();
 router.post(
@@ -21,6 +22,7 @@ router.post(
   },
   startLogbook
 );
+router.post("/:logbookId/details", addDetail);
 router.get("/:logbookId", getLogbook);
 router.patch("/:logbookId", patchLogbook);
 
